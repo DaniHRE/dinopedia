@@ -19,7 +19,7 @@ class Dinosaur(models.Model):
     familia = models.CharField(max_length=255, blank=False, null=False)
     subFamilia = models.CharField(max_length=255, blank=False, null=False)
     genero = models.CharField(max_length=255, blank=False, null=False)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category', blank=False, null=False)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories', blank=False, null=False)
 
     class Meta:
         managed = True
