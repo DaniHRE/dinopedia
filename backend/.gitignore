@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 mediafiles/images/*
 
+# Nix direnv
+.direnv
+.envrc
+
 # C extensions
 *.so
 
