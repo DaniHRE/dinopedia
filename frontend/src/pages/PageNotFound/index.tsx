@@ -1,6 +1,7 @@
 import { Image, Container, Title, Text, Button, SimpleGrid } from '@mantine/core';
 import image from '../../assets/404_page.svg';
 import { useStyles } from './style';
+import { IconBrandTwitter } from '@tabler/icons';
 
 export function PageNotFound() {
     const { classes } = useStyles();
@@ -15,7 +16,7 @@ export function PageNotFound() {
                         Page you are trying to open does not exist. You may have mistyped the address, or the
                         page has been moved to another URL. If you think this is an error contact support.
                     </Text>
-                    <Button variant="outline" size="md" mt="xl" className={classes.control}>
+                    <Button component="a" href="/" variant="outline" size="md" mt="xl" className={classes.control}>
                         Get back to home page
                     </Button>
                 </div>
