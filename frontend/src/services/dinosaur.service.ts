@@ -1,28 +1,50 @@
-import http from "../http-common";
-import IDinosaurData from "../types/api.type";
+import axios from "axios";
+import { GetUsersResponse } from "../types/api.type";
 
-class DinosaurDataService {
-    getAll() {
-        return http.get<Array<IDinosaurData>>("/dinosaur");
-    }
+const url = "http://localhost:8000/api";
 
-    get(id: string) {
-        return http.get<IDinosaurData>(`/dinosaur/${id}`);
-    }
+async function getUsers() {
+    try {
+        const { data, status } = await axios.get<GetUsersResponse>(
+            url,
+            {
+                headers: {
+                    Accept: 'application/json',
+                },
+            },
+        );
 
-    create(data: IDinosaurData) {
-        return http.post<IDinosaurData>(`/dinosaur`, data);
-    }
+        console.log(JSON.stringify(data, null, 4));
+        console.log('response status: ', status);
 
-    update(data: IDinosaurData, id: any) {
-        return http.put<any>(`/dinosaur/${id}`, data);
-    }
-
-    delete(id: any) {
-        return http.delete<any>(`/dinosaur/${id}`);
-    }
-
-    deleteAll() {
-        return http.delete<any>("/dinosaur");
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.log('error message: ', error.message);
+            return error.message;
+        } else {
+            console.log('unexpected error: ', error);
+            return 'unexpected error occurred.';
+        }
     }
 }
+
+// get(id: string) {
+//     return http.get<Dinosaur>(`/dinosaur/${id}`);
+// }
+
+// create(data: Dinosaur) {
+//     return http.post<Dinosaur>(`/dinosaur`, data);
+// }
+
+// update(data: Dinosaur, id: any) {
+//     return http.put<any>(`/dinosaur/${id}`, data);
+// }
+
+// delete (id: any) {
+//     return http.delete<any>(`/dinosaur/${id}`);
+// }
+
+// deleteAll() {
+//     return http.delete<any>("/dinosaur");
+// }
