@@ -1,4 +1,4 @@
-export default interface IDinosaurData {
+type Dinosaur = {
     id: number,
     image: string,
     nome: string,
@@ -10,4 +10,3 @@ export default interface IDinosaurData {
     genero: string,
     category: number,
 }
-
