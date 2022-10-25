@@ -1,11 +1,13 @@
 import { IconHeart } from '@tabler/icons';
-import { Card, Image, Text, Group, Badge, Button, ActionIcon, createStyles } from '@mantine/core';
+import { Card, Image, Text, Group, Badge, ActionIcon } from '@mantine/core';
 import { useStyles } from './style';
+import { StyledModal } from '../StyledModal';
 
 interface BadgeCardProps {
     image: string;
     title: string;
     country: string;
+    shortDescription: string;
     description: string;
     badges: {
         emoji: string;
@@ -13,7 +15,7 @@ interface BadgeCardProps {
     }[];
 }
 
-export function BadgeCard({ image, title, description, country, badges }: BadgeCardProps) {
+export function BadgeCard({ image, title, shortDescription, description, country, badges }: BadgeCardProps) {
     const { classes, theme } = useStyles();
 
     const features = badges.map((badge) => (
@@ -32,21 +34,21 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
                 <Image src={image} alt={title} height={180} />
             </Card.Section>
 
-            <Card.Section className={classes.section} mt="md">
+            <Card.Section className={classes.section}>
                 <Group position="apart">
                     <Text size="lg" weight={500}>
                         {title}
                     </Text>
-                    <Badge size="sm">{country}</Badge>
+                    <Badge size="sm">🌎 {country}</Badge>
                 </Group>
                 <Text size="sm" mt="xs">
-                    {description}
+                    {shortDescription}
                 </Text>
             </Card.Section>
 
-            <Card.Section className={classes.section}>
-                <Text mt="md" className={classes.label} color="dimmed">
-                    Perfect for you, if you enjoy
+            <Card.Section className={classes.section} mt="md">
+                <Text size="sm" className={classes.label} color="dimmed">
+                    Detailed Info
                 </Text>
                 <Group spacing={7} mt={5}>
                     {features}
@@ -54,9 +56,7 @@ export function BadgeCard({ image, title, description, country, badges }: BadgeC
             </Card.Section>
 
             <Group mt="xs">
-                <Button radius="md" style={{ flex: 1 }}>
-                    Show details
-                </Button>
+                <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
                 <ActionIcon variant="default" radius="md" size={36}>
                     <IconHeart size={18} className={classes.like} stroke={1.5} />
                 </ActionIcon>
