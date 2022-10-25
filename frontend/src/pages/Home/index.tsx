@@ -1,42 +1,51 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Dinosaur } from '../../api/api';
+import { Box } from '@mantine/core';
+import { DinosaurType } from '../../models/dinosaur.interface';
+import { BadgeCard } from '../../components/BadgeCard';
 
-interface Dinosaur {
-  id: number;
-  nome: string;
-  clado: string;
-  filo: string;
-  genero: string;
-  reino: string;
-  familia: string;
-  subFamilia: string;
-  image: string;
-  category: number;
-}
 
 export function Home() {
-  const [data, setData] = useState<Dinosaur>();
-  const url = 'http://localhost:8000/api/';
+  const [opened, handlers] = useDisclosure(false, {
+    onOpen: () => console.log('Opened'),
+    onClose: () => console.log('Closed'),
+  });
+
+  const [isCreate, setIsCreate] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [dinosaurs, setDinosaurs] = useState<DinosaurType[]>([]);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
-    axios.get(`${url}dinosaur/`)
-      .then(response => {
-        setData(response.data);
-        console.log(response.data)
+    Dinosaur.getDinosaurs()
+      .then((data) => {
+        setDinosaurs(data);
       })
-      .catch(error => console.error(`Error: ${error}`));
+      .catch(() => {
+        setIsError(true);
+      });
+    return () => { };
   }, []);
-
-  if(data === undefined){
-    return(<div>Loading</div>)
-  }
 
   return (
     <div className="Home">
       <h1>Dinopedia</h1>
-      <ul>
-        {JSON.stringify(data)}
-      </ul>
+      {dinosaurs.map((data) => {
+        return (
+          <BadgeCard
+            image={data.image}
+            title={data.name}
+            country={data.country}
+            description={data.description}
+            badges={[
+              { emoji: <></>, label:<></> }
+            ]}
+          />
+        );
+      })}
     </div>
   )
 }
