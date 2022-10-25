@@ -3,12 +3,12 @@ export interface DinosaurType {
     image: string;
     name: string;
     species: string;
-    category: number;
     feeding_habit: string;
     height: string;
     length: string;
     weight: string;
     country: string;
     region: string;
+    short_description: string;
     description: string;
 }
