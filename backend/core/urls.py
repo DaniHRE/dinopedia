@@ -4,11 +4,10 @@ from django.conf import settings
 from django.urls import path, include
 from rest_framework import routers
 
-from dinopedia.api.viewsets import DinosaurViewSet, CategoryViewSet
+from dinopedia.api.viewsets import DinosaurViewSet
 
 router = routers.DefaultRouter()
 router.register(r'dinosaur', DinosaurViewSet)
-router.register(r'category', CategoryViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls)),
