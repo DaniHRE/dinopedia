@@ -16,14 +16,16 @@ class Category(models.Model):
         return self.nomeCategoria
 
 class Dinosaur(models.Model):
-    nome = models.CharField(max_length=255)
-    reino = models.CharField(max_length=255, blank=False, null=False)
-    filo = models.CharField(max_length=255, blank=False, null=False)
-    clado = models.CharField(max_length=255, blank=False, null=False)
-    familia = models.CharField(max_length=255, blank=False, null=False)
-    subFamilia = models.CharField(max_length=255, blank=False, null=False)
-    genero = models.CharField(max_length=255, blank=False, null=False)
     image = StdImageField(upload_to=upload_to, blank=False, null=False)
+    name = models.CharField(max_length=255)
+    species = models.CharField(max_length=255, blank=False, null=False)
+    feeding_habit = models.CharField(max_length=255, blank=False, null=False)
+    height = models.CharField(max_length=255, blank=False, null=False)
+    length = models.CharField(max_length=255, blank=False, null=False)
+    weight = models.CharField(max_length=255, blank=False, null=False)
+    country = models.CharField(max_length=255, blank=False, null=False)
+    region = models.CharField(max_length=255, blank=False, null=False)
+    description = models.TextField(max_length=255, blank=False, null=False)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories', blank=False, null=False)
 
     class Meta:
