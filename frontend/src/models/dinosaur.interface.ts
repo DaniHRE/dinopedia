@@ -1,4 +1,4 @@
-export interface Dinosaur {
+export interface DinosaurType {
     id: number;
     nome: string;
     clado: string;
