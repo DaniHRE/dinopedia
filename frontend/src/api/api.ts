@@ -16,9 +16,13 @@ const requests = {
 };
 
 export const Dinosaur = {
-    getDinosaurs: (): Promise<DinosaurType> => requests.get('dinosaur'),
+    getDinosaurs: (): Promise<DinosaurType[]> => requests.get('dinosaur/'),
     getDinosaur: (id: number): Promise<DinosaurType> => requests.get(`dinosaur/${id}`),
     createDinosaur: (dinosaur: DinosaurType): Promise<DinosaurType> => requests.post('dinosaurs', dinosaur),
     updateDinosaur: (dinosaur: DinosaurType, id: number): Promise<DinosaurType> => requests.put(`dinosaur/${id}`, dinosaur),
     deleteDinosaur: (id: number): Promise<void> => requests.delete(`dinosaur/${id}`),
 };
+
+// export const Category = {
+//     getCategory
+// }
