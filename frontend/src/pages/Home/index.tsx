@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Dinosaur } from '../../api/api';
-import { Box } from '@mantine/core';
 import { DinosaurType } from '../../models/dinosaur.interface';
 import { BadgeCard } from '../../components/BadgeCard';
-
 
 export function Home() {
   const [opened, handlers] = useDisclosure(false, {
@@ -32,16 +29,20 @@ export function Home() {
 
   return (
     <div className="Home">
-      <h1>Dinopedia</h1>
       {dinosaurs.map((data) => {
         return (
           <BadgeCard
             image={data.image}
             title={data.name}
-            country={data.country}
+            country={data.region}
+            shortDescription={data.short_description}
             description={data.description}
             badges={[
-              { emoji: <></>, label:<></> }
+              { emoji: '🥄', label: `${data.feeding_habit}` },
+              { emoji: '🆙', label: `${data.height}` },
+              { emoji: '🏋️‍♀️', label: `${data.weight}` },
+              { emoji: '📏', label: `${data.length}`},
+              { emoji: '🦖', label: `${data.species}`}
             ]}
           />
         );
