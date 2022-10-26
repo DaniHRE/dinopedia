@@ -1,14 +1,14 @@
-asgiref @ file:///build/source/dist/asgiref-3.5.0-py3-none-any.whl
-async-timeout @ file:///build/async-timeout-4.0.2/dist/async_timeout-4.0.2-py3-none-any.whl
+asgiref 
+async-timeout 
 distlib==0.3.6
-Django @ file:///build/Django-3.2.14/dist/Django-3.2.14-py3-none-any.whl
+Django 
 django-cors-headers==3.13.0
 django-stdimage==6.0.1
-djangorestframework @ file:///build/source/dist/djangorestframework-3.12.4-py3-none-any.whl
+djangorestframework 
 filelock==3.8.0
 Pillow==9.2.0
 platformdirs==2.5.2
-pytz @ file:///build/pytz-2022.1/dist/pytz-2022.1-py3-none-any.whl
-sqlparse @ file:///build/sqlparse-0.4.2/dist/sqlparse-0.4.2-py3-none-any.whl
-typing_extensions @ file:///build/typing_extensions-4.1.1/dist/typing_extensions-4.1.1-py3-none-any.whl
+pytz 
+sqlparse 
+typing_extensions 
 tzdata==2022.4

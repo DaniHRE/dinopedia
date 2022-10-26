@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Modal, Button, Group, Text, Title } from '@mantine/core';
+import { Modal, Button, Group, Text, Title, DefaultProps } from '@mantine/core';
 import { useStyles } from './style';
 
-export interface StyledModalProps {
+export interface StyledModalProps extends DefaultProps {
   title: string;
   buttonValue: string;
   content: string;
@@ -10,7 +10,7 @@ export interface StyledModalProps {
 
 export function StyledModal({ title, buttonValue, content }: StyledModalProps) {
   const [opened, setOpened] = useState(false);
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
 
   return (
     <>
@@ -28,8 +28,8 @@ export function StyledModal({ title, buttonValue, content }: StyledModalProps) {
         </Text>
       </Modal>
 
-      <Group position="center">
-        <Button radius="md" onClick={() => setOpened(true)}>
+      <Group style={{ flex: 1}} position="center">
+        <Button radius="md" style={{ flex: 1 }} onClick={() => setOpened(true)}>
           {buttonValue}
         </Button>
       </Group>

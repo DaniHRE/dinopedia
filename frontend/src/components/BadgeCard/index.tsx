@@ -1,5 +1,4 @@
-import { IconHeart } from '@tabler/icons';
-import { Card, Image, Text, Group, Badge, ActionIcon } from '@mantine/core';
+import { Card, Image, Text, Group, Badge } from '@mantine/core';
 import { useStyles } from './style';
 import { StyledModal } from '../StyledModal';
 
@@ -47,7 +46,7 @@ export function BadgeCard({ image, title, shortDescription, description, country
             </Card.Section>
 
             <Card.Section className={classes.section} mt="md">
-                <Text size="sm" className={classes.label} color="dimmed">
+                <Text style={{}} size="sm" className={classes.label} color="dimmed">
                     Detailed Info
                 </Text>
                 <Group spacing={7} mt={5}>
@@ -57,9 +56,9 @@ export function BadgeCard({ image, title, shortDescription, description, country
 
             <Group mt="xs">
                 <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
-                <ActionIcon variant="default" radius="md" size={36}>
+                {/* <ActionIcon variant="default" radius="md" size={36}>
                     <IconHeart size={18} className={classes.like} stroke={1.5} />
-                </ActionIcon>
+                </ActionIcon> */}
             </Group>
         </Card>
     );
