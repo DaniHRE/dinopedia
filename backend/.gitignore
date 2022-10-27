@@ -5,7 +5,6 @@ __pycache__/
 
 # Nix direnv
 .direnv
-.envrc
 
 # C extensions
 *.so
