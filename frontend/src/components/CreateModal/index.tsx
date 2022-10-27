@@ -2,21 +2,23 @@ import { useState } from 'react';
 import { useStyles } from './style';
 import { useForm } from '@mantine/form';
 import { IconPlus } from '@tabler/icons';
-import { DinosaurType } from '../../models/dinosaur.interface';
-import { Modal, Button, Group, Title, DefaultProps, ActionIcon, TextInput, Textarea, NumberInput } from '@mantine/core';
+import { Modal, Button, Group, Title, DefaultProps, ActionIcon, TextInput, Textarea, NumberInput, FileButton } from '@mantine/core';
+import { Dinosaur } from '../../api/api';
 
 export interface CreateModalProps extends DefaultProps {
-    onOpen: () => void;
-    setIsEdit: (state: boolean) => void;
-    dinosaur: DinosaurType;
+    // onOpen: () => void;
+    // setIsEdit: (state: boolean) => void;
+    // dinosaur: DinosaurType;
 }
 
 export function CreateModal({ onOpen, setIsEdit, dinosaur }: CreateModalProps) {
     const [opened, setOpened] = useState(false);
+    const [file, setFile] = useState<File | null>(null);
     const { classes } = useStyles();
 
     const form = useForm({
         initialValues: {
+            image: file,
             name: '',
             species: '',
             feeding_habit: '',
@@ -29,11 +31,13 @@ export function CreateModal({ onOpen, setIsEdit, dinosaur }: CreateModalProps) {
         }
     });
 
+    console.table(form.values.image)
+
     return (
         <>
             <Modal
                 opened={opened}
-                onClose={() => {setOpened(false); form.reset()}}
+                onClose={() => { setOpened(false); form.reset() }}
                 title={
                     <Title order={3} weight={500}>
                         Add Dinosaur 🦖
@@ -53,13 +57,16 @@ export function CreateModal({ onOpen, setIsEdit, dinosaur }: CreateModalProps) {
                     <NumberInput withAsterisk label="Length in m" placeholder="Length" {...form.getInputProps('length')} />
                     <NumberInput withAsterisk label="Weight in kg" placeholder="Weight" {...form.getInputProps('weight')} />
                 </Group>
-                <Group grow mt="sm">
-                    <Textarea autosize withAsterisk label="Short Description" {...form.getInputProps('short_description')} />
-                    <Textarea autosize withAsterisk label="Description" {...form.getInputProps('description')} />
+                <Group style={{ display: 'flex', alignItems: 'flex-start' }} grow mt="sm">
+                    <Textarea autosize minRows={1} maxRows={4} withAsterisk label="Short Description" {...form.getInputProps('short_description')} />
+                    <Textarea autosize minRows={1} maxRows={4} withAsterisk label="Description" {...form.getInputProps('description')} />
                 </Group>
 
-                <Group mt="xl" position="right">
-                    <Button> Confirm </Button>
+                <Group mt="xl" position="apart">
+                    <FileButton onChange={setFile} accept="image/*">
+                        {(props) => <Button {...props}>Upload image</Button>}
+                    </FileButton>
+                    <Button onClick={() => Dinosaur.createDinosaur(form.values)}> Confirm </Button>
                 </Group>
             </Modal>
 
