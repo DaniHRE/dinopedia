@@ -29,26 +29,24 @@ export function Home() {
 
   }, []);
 
-  dinosaurs.map((data) => { console.log(data) })
-
   return (
     <div className="Home">
       <CreateModal />
-      {dinosaurs.map((data) => {
+      {dinosaurs.map((dinosaur) => {
         return (
           <BadgeCard
-            key={data.id}
-            image={data.image}
-            title={data.name}
-            country={data.region}
-            shortDescription={data.short_description}
-            description={data.description}
+            key={dinosaur.id}
+            image={dinosaur.image}
+            title={dinosaur.name}
+            country={dinosaur.region}
+            shortDescription={dinosaur.short_description}
+            description={dinosaur.description}
             badges={[
-              { emoji: "🥄", label: `${data.feeding_habit}` },
-              { emoji: "🆙", label: `${data.height}` },
-              { emoji: "📏", label: `${data.length}` },
-              { emoji: "🏋️‍♀️", label: `${data.weight}` },
-              { emoji: "🦖", label: `${data.species}` },
+              { emoji: "🥄", label: `${dinosaur.feeding_habit}` },
+              { emoji: "🆙", label: `${dinosaur.height}` },
+              { emoji: "📏", label: `${dinosaur.length}` },
+              { emoji: "🏋️‍♀️", label: `${dinosaur.weight}` },
+              { emoji: "🦖", label: `${dinosaur.species}` },
             ]}
           />
         );

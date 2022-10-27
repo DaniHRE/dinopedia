@@ -1,8 +1,10 @@
 import { Card, Image, Text, Group, Badge } from '@mantine/core';
 import { useStyles } from './style';
 import { StyledModal } from '../StyledModal';
+import { DeleteModal } from '../DeleteModal';
 
 interface BadgeCardProps {
+    key: number | undefined ;
     image: string;
     title: string;
     country: string;
@@ -56,6 +58,7 @@ export function BadgeCard({ image, title, shortDescription, description, country
 
             <Group mt="xs">
                 <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
+                <DeleteModal />
                 {/* <ActionIcon variant="default" radius="md" size={36}>
                     <IconHeart size={18} className={classes.like} stroke={1.5} />
                 </ActionIcon> */}
