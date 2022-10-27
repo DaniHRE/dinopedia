@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Dinosaur } from "../../api/api";
-import { DinosaurType } from "../../models/dinosaur.interface";
+import { IDinosaur } from "../../models/dinosaur.interface";
 import { BadgeCard } from "../../components/BadgeCard";
 import { CreateModal } from "../../components/CreateModal";
 
@@ -14,7 +14,7 @@ export function Home() {
   const [isCreate, setIsCreate] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
-  const [dinosaurs, setDinosaurs] = useState<DinosaurType[]>([]);
+  const [dinosaurs, setDinosaurs] = useState<IDinosaur[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,12 +28,16 @@ export function Home() {
     return () => { };
 
   }, []);
+
+  dinosaurs.map((data) => { console.log(data) })
+
   return (
     <div className="Home">
       <CreateModal />
       {dinosaurs.map((data) => {
         return (
           <BadgeCard
+            key={data.id}
             image={data.image}
             title={data.name}
             country={data.region}

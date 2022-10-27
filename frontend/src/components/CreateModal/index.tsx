@@ -31,8 +31,6 @@ export function CreateModal({ onOpen, setIsEdit, dinosaur }: CreateModalProps) {
         }
     });
 
-    console.table(form.values.image)
-
     return (
         <>
             <Modal
@@ -63,10 +61,10 @@ export function CreateModal({ onOpen, setIsEdit, dinosaur }: CreateModalProps) {
                 </Group>
 
                 <Group mt="xl" position="apart">
-                    <FileButton onChange={setFile} accept="image/*">
+                    <FileButton onChange={setFile} accept="image/*" {...form.getInputProps('image')}>
                         {(props) => <Button {...props}>Upload image</Button>}
                     </FileButton>
-                    <Button onClick={() => Dinosaur.createDinosaur(form.values)}> Confirm </Button>
+                    <Button onClick={() => Dinosaur.createDinosaur({...form.values})}> Confirm </Button>
                 </Group>
             </Modal>
 

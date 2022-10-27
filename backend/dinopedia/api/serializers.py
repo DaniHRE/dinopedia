@@ -9,6 +9,7 @@ class DinosaurSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dinosaur
         fields = [
+            'id',
             'image',
             'name',
             'species',
