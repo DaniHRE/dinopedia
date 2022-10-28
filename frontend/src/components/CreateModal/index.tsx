@@ -32,6 +32,18 @@ export function CreateModal({ show, onHide, onExit }: CreateModalProps) {
             short_description: '',
             description: ''
         },
+        validate: {
+            name: (value) => (value.length < 8 ? 'Name must have at least 8 letters' : null),
+            species: (value) => (!value ? 'This field needs to be filled' : null),
+            feeding_habit: (value) => (!value ? 'This field needs to be filled' : null),
+            height: (value) => (!value ? 'This field needs to be filled' : null),
+            length: (value) => (!value ? 'This field needs to be filled' : null),
+            weight: (value) => (!value ? 'This field needs to be filled' : null),
+            region: (value) => (!value ? 'This field needs to be filled' : null),
+            short_description: (value) => (!value ? 'This field needs to be filled' : null),
+            description: (value) => (!value ? 'This field needs to be filled' : null),
+            image: (value: File) => (!value ? 'Need to atache a image' : null),
+        },
     });
 
     const submit = () => {

@@ -27,7 +27,6 @@ export function Home() {
       .catch(() => {
         setIsError(true);
       });
-    console.log('atualizei');
     return () => { };
   }, [reducerValue]);
 
