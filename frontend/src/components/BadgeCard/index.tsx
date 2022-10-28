@@ -4,7 +4,7 @@ import { StyledModal } from '../StyledModal';
 import { DeleteModal } from '../DeleteModal';
 
 interface BadgeCardProps {
-    key: number | undefined ;
+    id: number;
     image: string;
     title: string;
     country: string;
@@ -16,13 +16,13 @@ interface BadgeCardProps {
     }[];
 }
 
-export function BadgeCard({ image, title, shortDescription, description, country, badges }: BadgeCardProps) {
+export function BadgeCard({ id, image, title, shortDescription, description, country, badges }: BadgeCardProps) {
     const { classes, theme } = useStyles();
 
-    const features = badges.map((badge) => (
+    const features = badges.map((badge, index) => (
         <Badge
             color={theme.colorScheme === 'dark' ? 'dark' : 'gray'}
-            key={badge.label}
+            key={index}
             leftSection={badge.emoji}
         >
             {badge.label}
@@ -58,7 +58,7 @@ export function BadgeCard({ image, title, shortDescription, description, country
 
             <Group mt="xs">
                 <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
-                <DeleteModal />
+                <DeleteModal id={id}/>
                 {/* <ActionIcon variant="default" radius="md" size={36}>
                     <IconHeart size={18} className={classes.like} stroke={1.5} />
                 </ActionIcon> */}

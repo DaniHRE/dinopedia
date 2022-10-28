@@ -1,5 +1,5 @@
 export interface IDinosaur {
-    id?: number;
+    id: number;
     image: string;
     name: string;
     species: string;
