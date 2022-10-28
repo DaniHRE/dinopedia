@@ -28,5 +28,5 @@ export const Dinosaur = {
     getDinosaur: (id: number): Promise<IDinosaur> => requests.get(`dinosaur/${id}`),
     createDinosaur: (dinosaur: IDinosaurPost): Promise<IDinosaurPost> => requests.post('dinosaur/', dinosaur),
     updateDinosaur: (dinosaur: IDinosaurPost, id: number): Promise<IDinosaurPost> => requests.put(`dinosaur/${id}`, dinosaur),
-    deleteDinosaur: (id: number): Promise<void> => requests.delete(`dinosaur/${id}`),
+    deleteDinosaur: (id: number): Promise<void> => requests.delete(`dinosaur/${id}/`),
 };

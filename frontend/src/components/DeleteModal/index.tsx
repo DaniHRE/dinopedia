@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useStyles } from './style';
-import {  IconTrash } from '@tabler/icons';
+import { IconTrash } from '@tabler/icons';
 import { Modal, Button, Group, Title, DefaultProps, ActionIcon, TextInput, Textarea, NumberInput, FileButton } from '@mantine/core';
 import { Dinosaur } from '../../api/api';
 
 export interface DeleteModalProps extends DefaultProps {
+    id: number;
     // onOpen: () => void;
     // setIsEdit: (state: boolean) => void;
     // dinosaur: DinosaurType;
 }
 
-export function DeleteModal({ onOpen, setIsEdit, dinosaur }: DeleteModalProps) {
+export function DeleteModal({ id, onOpen, setIsEdit, dinosaur }: DeleteModalProps) {
     const [opened, setOpened] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const { classes } = useStyles();
@@ -19,6 +20,8 @@ export function DeleteModal({ onOpen, setIsEdit, dinosaur }: DeleteModalProps) {
         <>
             <Modal
                 opened={opened}
+                overlayOpacity={0.55}
+                overlayBlur={3}
                 onClose={() => { setOpened(false) }}
                 title={
                     <Title order={3} weight={500}>
@@ -26,7 +29,7 @@ export function DeleteModal({ onOpen, setIsEdit, dinosaur }: DeleteModalProps) {
                     </Title>
                 }
             >
-                <Button onClick={() => {Dinosaur.deleteDinosaur()}} />
+                <Button onClick={() => { Dinosaur.deleteDinosaur(id) }} />
             </Modal>
 
             <Group position="center">
