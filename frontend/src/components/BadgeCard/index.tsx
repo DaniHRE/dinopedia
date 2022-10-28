@@ -13,6 +13,11 @@ interface BadgeCardProps {
     badges: {
         emoji: string;
         label: string;
+    }[]
+    serviceState?: {
+        onToggleHandler: () => void;
+        onExit: React.DispatchWithoutAction;
+        onOpen: boolean;
     }[];
 }
 
@@ -59,9 +64,6 @@ export function BadgeCard({ id, image, title, shortDescription, description, cou
             <Group mt="xs">
                 <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
                 <DeleteModal id={id}/>
-                {/* <ActionIcon variant="default" radius="md" size={36}>
-                    <IconHeart size={18} className={classes.like} stroke={1.5} />
-                </ActionIcon> */}
             </Group>
         </Card>
     );

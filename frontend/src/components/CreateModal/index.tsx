@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { useStyles } from './style';
 import { useForm } from '@mantine/form';
 import { IconUpload } from '@tabler/icons';
-import { Modal, Button, Group, Title, DefaultProps, ActionIcon, TextInput, Textarea, NumberInput, FileButton, FileInput, Code } from '@mantine/core';
+import { Modal, Button, Group, Title, DefaultProps, TextInput, Textarea, NumberInput, FileInput } from '@mantine/core';
 import { Dinosaur } from '../../api/api';
 
 export interface CreateModalProps extends DefaultProps {
-    show: boolean;
-    onHide: Function;
-    onExit: Function;
-    // onOpen: () => void;
+    onOpen: boolean;
+    onHide?: Function;
+    onExit?: React.DispatchWithoutAction;
+    onToggle: () => void;
     // setIsEdit: (state: boolean) => void;
     // dinosaur: DinosaurType;
 }
 
-export function CreateModal({ show, onHide, onExit }: CreateModalProps) {
+export function CreateModal({ onOpen, onHide, onExit, onToggle }: CreateModalProps) {
     const { classes } = useStyles();
 
     const [file, setFile] = useState<File | null>(null);
@@ -48,18 +48,18 @@ export function CreateModal({ show, onHide, onExit }: CreateModalProps) {
 
     const submit = () => {
         Dinosaur.createDinosaur({ ...form.values })
-        onHide()
+        onToggle
         form.reset()
-        onExit()
+        onExit
     }
 
     return (
         <>
             <Modal
-                opened={show}
+                opened={onOpen}
                 overlayOpacity={0.55}
                 overlayBlur={3}
-                onClose={() => { onHide(); form.reset(); }}
+                onClose={() => { onToggle(); form.reset(); }}
                 title={
                     <Title order={3} weight={500}>
                         Add Dinosaur 🦖
