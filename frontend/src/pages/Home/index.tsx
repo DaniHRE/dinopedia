@@ -15,19 +15,22 @@ export function Home() {
 
   const [dinosaurs, setDinosaurs] = useState<IDinosaur[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
-  const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
+
+  const fetchData = () => {
+    Dinosaur.getDinosaurs()
+    .then((data) => {
+      setDinosaurs(data);
+    })
+    .catch(() => {
+      setIsError(true);
+    });
+  }
 
   useEffect(() => {
-    Dinosaur.getDinosaurs()
-      .then((data) => {
-        setDinosaurs(data);
-      })
-      .catch(() => {
-        setIsError(true);
-      });
-    console.log('refetched')
+    fetchData()
+    console.log('Fetou a poha da api')
     return () => { };
-  }, [reducerValue]);
+  }, []);
 
   return (
     <div className="Home">
@@ -36,7 +39,7 @@ export function Home() {
           <IconPlus size={18} stroke={1.5} />
         </ActionIcon>
       </Group>
-      <CreateModal onOpen={opened} onToggle={handlers.toggle} onExit={forceUpdate}/>
+      <CreateModal onOpen={opened} onToggle={handlers.toggle} onSubmit={() => {fetchData(); handlers.toggle();}} />
       {dinosaurs.map((dinosaur, index) => {
         return (
           <BadgeCard
@@ -54,11 +57,10 @@ export function Home() {
               { emoji: "🏋️‍♀️", label: `${dinosaur.weight}` },
               { emoji: "🦖", label: `${dinosaur.species}` },
             ]}
-            serviceState={[
-              {onToggleHandler: handlers.toggle},
-              {onExit: forceUpdate},
-              {onOpen: opened}
-            ]}
+            serviceState={{
+              onToggleHandler: handlers.toggle,
+              onOpen: opened,
+            }}
           />
         );
       })}

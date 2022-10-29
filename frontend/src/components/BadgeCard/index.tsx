@@ -16,9 +16,8 @@ interface BadgeCardProps {
     }[]
     serviceState?: {
         onToggleHandler: () => void;
-        onExit: React.DispatchWithoutAction;
         onOpen: boolean;
-    }[];
+    };
 }
 
 export function BadgeCard({ id, image, title, shortDescription, description, country, badges }: BadgeCardProps) {

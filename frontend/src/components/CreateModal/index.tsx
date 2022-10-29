@@ -8,13 +8,13 @@ import { Dinosaur } from '../../api/api';
 export interface CreateModalProps extends DefaultProps {
     onOpen: boolean;
     onHide?: Function;
-    onExit?: React.DispatchWithoutAction;
+    onSubmit: () => void;
     onToggle: () => void;
     // setIsEdit: (state: boolean) => void;
     // dinosaur: DinosaurType;
 }
 
-export function CreateModal({ onOpen, onHide, onExit, onToggle }: CreateModalProps) {
+export function CreateModal({ onOpen, onHide, onSubmit, onToggle }: CreateModalProps) {
     const { classes } = useStyles();
 
     const [file, setFile] = useState<File | null>(null);
@@ -48,9 +48,8 @@ export function CreateModal({ onOpen, onHide, onExit, onToggle }: CreateModalPro
 
     const submit = () => {
         Dinosaur.createDinosaur({ ...form.values })
-        onToggle
         form.reset()
-        onExit
+        onSubmit()
     }
 
     return (
@@ -66,7 +65,7 @@ export function CreateModal({ onOpen, onHide, onExit, onToggle }: CreateModalPro
                     </Title>
                 }
             >
-                <form onSubmit={form.onSubmit((values) => { submit() })}>
+                <form onSubmit={form.onSubmit((values) => {submit()})}>
                     <Group className={classes.flex} grow mt="sm">
                         <TextInput withAsterisk label="Name" placeholder="Name" {...form.getInputProps('name')} />
                         <TextInput withAsterisk label="Species" placeholder="Species" {...form.getInputProps('species')} />
