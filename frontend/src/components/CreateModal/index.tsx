@@ -7,14 +7,11 @@ import { Dinosaur } from '../../api/api';
 
 export interface CreateModalProps extends DefaultProps {
     onOpen: boolean;
-    onHide?: Function;
-    onSubmit: () => void;
     onToggle: () => void;
-    // setIsEdit: (state: boolean) => void;
-    // dinosaur: DinosaurType;
+    onSubmit: Function;
 }
 
-export function CreateModal({ onOpen, onHide, onSubmit, onToggle }: CreateModalProps) {
+export function CreateModal({ onOpen, onSubmit, onToggle }: CreateModalProps) {
     const { classes } = useStyles();
 
     const [file, setFile] = useState<File | null>(null);
@@ -46,10 +43,10 @@ export function CreateModal({ onOpen, onHide, onSubmit, onToggle }: CreateModalP
         },
     });
 
-    const submit = () => {
-        Dinosaur.createDinosaur({ ...form.values })
+    const submit = async () => {
+        const newDinosaur = await Dinosaur.createDinosaur({ ...form.values })
         form.reset()
-        onSubmit()
+        onSubmit(newDinosaur)
     }
 
     return (
