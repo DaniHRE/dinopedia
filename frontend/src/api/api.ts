@@ -20,7 +20,7 @@ const requests = {
     get: (url: string) => instance.get(url).then(responseBody),
     post: (url: string, body: {}) => postInstance.post(url, body).then(responseBody),
     put: (url: string, body: {}) => postInstance.put(url, body).then(responseBody),
-    delete: (url: string) => instance.delete(url).then(responseBody),
+    delete: (url: string) => instance.delete(url).then(response => response),
 };
 
 export const Dinosaur = {
@@ -28,5 +28,5 @@ export const Dinosaur = {
     getDinosaur: (id: number): Promise<IDinosaur> => requests.get(`dinosaur/${id}`),
     createDinosaur: (dinosaur: IDinosaurPost): Promise<IDinosaurPost> => requests.post('dinosaur/', dinosaur),
     updateDinosaur: (dinosaur: IDinosaurPost, id: number): Promise<IDinosaurPost> => requests.put(`dinosaur/${id}`, dinosaur),
-    deleteDinosaur: (id: number): Promise<void> => requests.delete(`dinosaur/${id}/`),
+    deleteDinosaur: (id: number): Promise<AxiosResponse> => requests.delete(`dinosaur/${id}/`),
 };
