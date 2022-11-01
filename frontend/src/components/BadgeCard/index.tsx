@@ -1,27 +1,23 @@
-import { Card, Image, Text, Group, Badge } from '@mantine/core';
+import { Card, Image, Text, Group, Badge, ActionIcon } from '@mantine/core';
 import { useStyles } from './style';
 import { StyledModal } from '../StyledModal';
 import { DeleteModal } from '../DeleteModal';
+import { IDinosaur } from '../../models/dinosaur.interface';
+import { IconTrash } from '@tabler/icons';
+import { useDisclosure } from '@mantine/hooks';
 
 interface BadgeCardProps {
-    id: number;
-    image: string;
-    title: string;
-    country: string;
-    shortDescription: string;
-    description: string;
+    dinosaur: IDinosaur;
+    onRemove: () => void;
     badges: {
         emoji: string;
         label: string;
     }[]
-    serviceState?: {
-        onToggleHandler: () => void;
-        onOpen: boolean;
-    };
 }
 
-export function BadgeCard({ id, image, title, shortDescription, description, country, badges }: BadgeCardProps) {
+export function BadgeCard({ dinosaur, badges, onRemove }: BadgeCardProps) {
     const { classes, theme } = useStyles();
+    const [isModalRemoveOpen, removeHandler] = useDisclosure(false);
 
     const features = badges.map((badge, index) => (
         <Badge
@@ -36,18 +32,18 @@ export function BadgeCard({ id, image, title, shortDescription, description, cou
     return (
         <Card withBorder radius="md" p="md" className={classes.card}>
             <Card.Section>
-                <Image src={image} alt={title} height={180} />
+                <Image src={dinosaur.image} alt={dinosaur.name} height={180} />
             </Card.Section>
 
             <Card.Section className={classes.section}>
                 <Group position="apart">
                     <Text size="lg" weight={500}>
-                        {title}
+                        {dinosaur.name}
                     </Text>
-                    <Badge size="sm">🌎 {country}</Badge>
+                    <Badge size="sm">🌎 {dinosaur.region}</Badge>
                 </Group>
                 <Text size="sm" mt="xs">
-                    {shortDescription}
+                    {dinosaur.short_description}
                 </Text>
             </Card.Section>
 
@@ -61,8 +57,18 @@ export function BadgeCard({ id, image, title, shortDescription, description, cou
             </Card.Section>
 
             <Group mt="xs">
-                <StyledModal title={`${title}`} buttonValue='Show details' content={`${description}`} />
-                <DeleteModal id={id}/>
+                <StyledModal title={`${dinosaur.name}`} buttonValue='Show details' content={`${dinosaur.description}`} />
+                <DeleteModal
+                    dinosaurID={dinosaur.id}
+                    isOpen={isModalRemoveOpen}
+                    onToggle={removeHandler.toggle}
+                    onRemove={() => { onRemove() }}
+                />
+                <Group position="center">
+                    <ActionIcon onClick={() => removeHandler.toggle()} variant="default" radius="md" size={36}>
+                        <IconTrash size={18} stroke={1.5} />
+                    </ActionIcon>
+                </Group>
             </Group>
         </Card>
     );
