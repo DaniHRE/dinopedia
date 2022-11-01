@@ -1,6 +1,6 @@
 import { IDinosaur } from "../../models/dinosaur.interface";
 import { CreateModal } from "../../components/CreateModal";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import { BadgeCard } from "../../components/BadgeCard";
 import { ActionIcon, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -8,48 +8,50 @@ import { IconPlus } from "@tabler/icons";
 import { Dinosaur } from "../../api/api";
 
 export function Home() {
-  const [opened, handlers] = useDisclosure(false);
-
-  const [isCreate, setIsCreate] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const [create, createHandler] = useDisclosure(false);
 
   const [dinosaurs, setDinosaurs] = useState<IDinosaur[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
 
   const fetchData = () => {
     Dinosaur.getDinosaurs()
-    .then((data) => {
-      setDinosaurs(data);
-    })
-    .catch(() => {
-      setIsError(true);
-    });
+      .then((data) => {
+        setDinosaurs(data);
+      })
+      .catch(() => {
+        setIsError(true);
+      });
+  }
+
+
+  const removeDinosaur = async (id: number) => {
+    const responseCheck = await Dinosaur.deleteDinosaur(id);
+    if (responseCheck.status == 204) {
+      setDinosaurs(dinosaurs.filter(dinosaur => dinosaur.id !== id));
+    } else {
+      console.log(responseCheck);
+    }
   }
 
   useEffect(() => {
     fetchData()
-    console.log('Fetou a poha da api')
-    return () => { };
   }, []);
 
   return (
     <div className="Home">
       <Group position="center">
-        <ActionIcon onClick={handlers.toggle} variant="default" radius="md" size={36}>
+        <ActionIcon onClick={createHandler.toggle} variant="default" radius="md" size={36}>
           <IconPlus size={18} stroke={1.5} />
         </ActionIcon>
       </Group>
-      <CreateModal onOpen={opened} onToggle={handlers.toggle} onSubmit={() => {fetchData(); handlers.toggle();}} />
+      <CreateModal onOpen={create} onToggle={createHandler.toggle} onSubmit={handleAddDinosaur} />
       {dinosaurs.map((dinosaur, index) => {
+        console.log(dinosaur)
         return (
           <BadgeCard
             key={index}
-            id={dinosaur.id}
-            image={dinosaur.image}
-            title={dinosaur.name}
-            country={dinosaur.region}
-            shortDescription={dinosaur.short_description}
-            description={dinosaur.description}
+            dinosaur={dinosaur}
+            onRemove={() => { removeDinosaur(dinosaur.id) }}
             badges={[
               { emoji: "🥄", label: `${dinosaur.feeding_habit}` },
               { emoji: "🆙", label: `${dinosaur.height}` },
@@ -57,10 +59,6 @@ export function Home() {
               { emoji: "🏋️‍♀️", label: `${dinosaur.weight}` },
               { emoji: "🦖", label: `${dinosaur.species}` },
             ]}
-            serviceState={{
-              onToggleHandler: handlers.toggle,
-              onOpen: opened,
-            }}
           />
         );
       })}
