@@ -23,6 +23,12 @@ export function Home() {
       });
   }
 
+  const handleAddDinosaur = (dinosaur: IDinosaur) => {
+    const copyDinosaurs = [...dinosaurs]
+    copyDinosaurs.push(dinosaur)
+    setDinosaurs(copyDinosaurs)
+    createHandler.toggle()
+  }
 
   const removeDinosaur = async (id: number) => {
     const responseCheck = await Dinosaur.deleteDinosaur(id);
