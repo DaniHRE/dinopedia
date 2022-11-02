@@ -4,9 +4,9 @@ export interface IDinosaur {
     name: string;
     species: string;
     feeding_habit: string;
-    height: string;
-    length: string;
-    weight: string;
+    height: number;
+    length: number;
+    weight: number;
     region: string;
     short_description: string;
     description: string;
@@ -18,9 +18,9 @@ export interface IDinosaurPost {
     name: string;
     species: string;
     feeding_habit: string;
-    height: string;
-    length: string;
-    weight: string;
+    height: number;
+    length: number;
+    weight: number;
     region: string;
     short_description: string;
     description: string;
