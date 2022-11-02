@@ -6,6 +6,7 @@ import { ActionIcon, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons";
 import { Dinosaur } from "../../api/api";
+import { HTTPSTATUSCODE } from "../../constants/statuscode";
 
 export function Home() {
   const [create, createHandler] = useDisclosure(false);
@@ -30,14 +31,19 @@ export function Home() {
     createHandler.toggle()
   }
 
+  const handleEditDinosaur = () => {
+    fetchData()
+  }
+
   const removeDinosaur = async (id: number) => {
     const responseCheck = await Dinosaur.deleteDinosaur(id);
-    if (responseCheck.status == 204) {
+    if (responseCheck.status == HTTPSTATUSCODE.SUCESS) {
       setDinosaurs(dinosaurs.filter(dinosaur => dinosaur.id !== id));
     } else {
       console.log(responseCheck);
     }
   }
+
 
   useEffect(() => {
     fetchData()
@@ -52,12 +58,13 @@ export function Home() {
       </Group>
       <CreateModal onOpen={create} onToggle={createHandler.toggle} onSubmit={handleAddDinosaur} />
       {dinosaurs.map((dinosaur, index) => {
-        console.log(dinosaur)
+        console.table(dinosaur)
         return (
           <BadgeCard
             key={index}
             dinosaur={dinosaur}
             onRemove={() => { removeDinosaur(dinosaur.id) }}
+            onEdit={() => { handleEditDinosaur() }}
             badges={[
               { emoji: "🥄", label: `${dinosaur.feeding_habit}` },
               { emoji: "🆙", label: `${dinosaur.height}` },
