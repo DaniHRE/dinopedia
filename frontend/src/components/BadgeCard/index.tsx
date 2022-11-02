@@ -3,21 +3,24 @@ import { useStyles } from './style';
 import { StyledModal } from '../StyledModal';
 import { DeleteModal } from '../DeleteModal';
 import { IDinosaur } from '../../models/dinosaur.interface';
-import { IconTrash } from '@tabler/icons';
+import { IconEdit, IconTrash } from '@tabler/icons';
 import { useDisclosure } from '@mantine/hooks';
+import { EditModal } from '../EditModal';
 
 interface BadgeCardProps {
     dinosaur: IDinosaur;
     onRemove: () => void;
+    onEdit: () => void;
     badges: {
         emoji: string;
         label: string;
     }[]
 }
 
-export function BadgeCard({ dinosaur, badges, onRemove }: BadgeCardProps) {
+export function BadgeCard({ dinosaur, onRemove, onEdit, badges }: BadgeCardProps) {
     const { classes, theme } = useStyles();
-    const [isModalRemoveOpen, removeHandler] = useDisclosure(false);
+    const [isRemoveModalOpen, removeHandler] = useDisclosure(false);
+    const [isEditModalOpen, editHandler] = useDisclosure(false);
 
     const features = badges.map((badge, index) => (
         <Badge
@@ -60,13 +63,24 @@ export function BadgeCard({ dinosaur, badges, onRemove }: BadgeCardProps) {
                 <StyledModal title={`${dinosaur.name}`} buttonValue='Show details' content={`${dinosaur.description}`} />
                 <DeleteModal
                     dinosaurID={dinosaur.id}
-                    isOpen={isModalRemoveOpen}
+                    isOpen={isRemoveModalOpen}
                     onToggle={removeHandler.toggle}
                     onRemove={() => { onRemove() }}
+                />
+                <EditModal
+                    dinosaur={dinosaur}
+                    isOpen={isEditModalOpen}
+                    onToggle={editHandler.toggle}
+                    onEdit={() => { onEdit() }}
                 />
                 <Group position="center">
                     <ActionIcon onClick={() => removeHandler.toggle()} variant="default" radius="md" size={36}>
                         <IconTrash size={18} stroke={1.5} />
+                    </ActionIcon>
+                </Group>
+                <Group position="center">
+                    <ActionIcon onClick={() => editHandler.toggle()} variant="default" radius="md" size={36}>
+                        <IconEdit size={18} stroke={1.5} />
                     </ActionIcon>
                 </Group>
             </Group>
